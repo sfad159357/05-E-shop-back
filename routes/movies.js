@@ -9,9 +9,7 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const movies = await Movie.find()
-    .select("-__v")
-    .sort("name");
+  const movies = await Movie.find().select("-__v").sort("name");
   res.send(movies);
 });
 
@@ -26,11 +24,11 @@ router.post("/", [auth], async (req, res) => {
     title: req.body.title,
     genre: {
       _id: genre._id,
-      name: genre.name
+      name: genre.name,
     },
     numberInStock: req.body.numberInStock,
     dailyRentalRate: req.body.dailyRentalRate,
-    publishDate: moment().toJSON()
+    publishDate: moment().toJSON(),
   });
   await movie.save();
 
@@ -50,10 +48,10 @@ router.put("/:id", [auth], async (req, res) => {
       title: req.body.title,
       genre: {
         _id: genre._id,
-        name: genre.name
+        name: genre.name,
       },
       numberInStock: req.body.numberInStock,
-      dailyRentalRate: req.body.dailyRentalRate
+      dailyRentalRate: req.body.dailyRentalRate,
     },
     { new: true }
   );
@@ -64,6 +62,8 @@ router.put("/:id", [auth], async (req, res) => {
   res.send(movie);
 });
 
+// 必須要同時具備auth和admin兩條件，才能夠被允許刪除
+// auth,admin是middleware function
 router.delete("/:id", [auth, admin], async (req, res) => {
   const movie = await Movie.findByIdAndRemove(req.params.id);
 

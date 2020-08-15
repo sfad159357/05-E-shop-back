@@ -12,7 +12,7 @@ module.exports = function (app) {
   app.use(function (req, res, next) {
     res.header(
       "Access-Control-Allow-Origin",
-      "safe-waters-08794.herokuapp.com"
+      "https://safe-waters-08794.herokuapp.com"
     ); // update to match the domain you will make the request from
     res.header(
       "Access-Control-Allow-Headers",
@@ -22,15 +22,12 @@ module.exports = function (app) {
   });
 
   app.use(express.json());
-  app.get("/api/genres", genres);
   app.use("/api/genres", genres);
   app.use("/api/customers", customers);
   app.use("/api/movies", movies);
-  app.get("/api/movies", movies);
   app.use("/api/rentals", rentals);
   app.use("/api/users", users);
   app.use("/api/auth", auth);
-  app.get("/api/auth", auth);
   app.use("/api/returns", returns);
   app.use(error);
 };

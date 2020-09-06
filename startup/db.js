@@ -4,10 +4,9 @@ const config = require("config");
 const MongoClient = require("mongodb").MongoClient;
 
 module.exports = function () {
-  const uri =
-    "mongodb+srv://sfad159357:753951sfad@cluster0.rjrvl.gcp.mongodb.net/vidly_db?retryWrites=true&w=majority";
-  const client = new MongoClient(uri, { useNewUrlParser: true });
-  client.connect((err) => {
+  var uri =
+    "mongodb://sfad159357:753951sfad@cluster0-shard-00-00.rjrvl.gcp.mongodb.net:27017/vidly";
+  MongoClient.connect(uri, function (err, client) {
     const collection = client.db("test").collection("devices");
     // perform actions on the collection object
     client.close();

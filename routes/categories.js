@@ -1,33 +1,33 @@
 const validateObjectId = require("../middleware/validateObjectId");
 const auth = require("../middleware/auth");
 const admin = require("../middleware/admin");
-const { Genre, validate } = require("../models/genre");
+const { Category, validate } = require("../models/category");
 const mongoose = require("mongoose");
 const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const genres = await Genre.find()
+  const categories = await Category.find()
     .select("-__v")
     .sort("name");
-  res.send(genres);
+  res.send(categories);
 });
 
 router.post("/", auth, async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  let genre = new Genre({ name: req.body.name });
-  genre = await genre.save();
+  let category = new Category({ name: req.body.name });
+  category = await Category.save();
 
-  res.send(genre);
+  res.send(category);
 });
 
 router.put("/:id", [auth, validateObjectId], async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  const genre = await Genre.findByIdAndUpdate(
+  const category = await Category.findByIdAndUpdate(
     req.params.id,
     { name: req.body.name },
     {
@@ -35,28 +35,28 @@ router.put("/:id", [auth, validateObjectId], async (req, res) => {
     }
   );
 
-  if (!genre)
-    return res.status(404).send("The genre with the given ID was not found.");
+  if (!category)
+    return res.status(404).send("The category with the given ID was not found.");
 
-  res.send(genre);
+  res.send(category);
 });
 
 router.delete("/:id", [auth, admin, validateObjectId], async (req, res) => {
-  const genre = await Genre.findByIdAndRemove(req.params.id);
+  const category = await Category.findByIdAndRemove(req.params.id);
 
-  if (!genre)
-    return res.status(404).send("The genre with the given ID was not found.");
+  if (!category)
+    return res.status(404).send("The category with the given ID was not found.");
 
-  res.send(genre);
+  res.send(category);
 });
 
 router.get("/:id", validateObjectId, async (req, res) => {
-  const genre = await Genre.findById(req.params.id).select("-__v");
+  const category = await Category.findById(req.params.id).select("-__v");
 
-  if (!genre)
-    return res.status(404).send("The genre with the given ID was not found.");
+  if (!category)
+    return res.status(404).send("The category with the given ID was not found.");
 
-  res.send(genre);
+  res.send(category);
 });
 
 module.exports = router;

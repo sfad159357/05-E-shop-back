@@ -1,5 +1,5 @@
 const { Rental, validate } = require("../models/rental");
-const { Movie } = require("../models/movie");
+const { Product } = require("../models/product");
 const { Customer } = require("../models/customer");
 const auth = require("../middleware/auth");
 const mongoose = require("mongoose");
@@ -23,11 +23,11 @@ router.post("/", auth, async (req, res) => {
   const customer = await Customer.findById(req.body.customerId);
   if (!customer) return res.status(400).send("Invalid customer.");
 
-  const movie = await Movie.findById(req.body.movieId);
-  if (!movie) return res.status(400).send("Invalid movie.");
+  const product = await Product.findById(req.body.productId);
+  if (!product) return res.status(400).send("Invalid product.");
 
-  if (movie.numberInStock === 0)
-    return res.status(400).send("Movie not in stock.");
+  if (product.numberInStock === 0)
+    return res.status(400).send("Product not in stock.");
 
   let rental = new Rental({
     customer: {
@@ -35,10 +35,10 @@ router.post("/", auth, async (req, res) => {
       name: customer.name,
       phone: customer.phone
     },
-    movie: {
-      _id: movie._id,
-      title: movie.title,
-      dailyRentalRate: movie.dailyRentalRate
+    product: {
+      _id: product._id,
+      title: product.title,
+      sales: product.sales
     }
   });
 
@@ -46,8 +46,8 @@ router.post("/", auth, async (req, res) => {
     new Fawn.Task()
       .save("rentals", rental)
       .update(
-        "movies",
-        { _id: movie._id },
+        "products",
+        { _id: product._id },
         {
           $inc: { numberInStock: -1 }
         }

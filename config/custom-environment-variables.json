@@ -1,4 +1,5 @@
 {
-  "jwtPrivateKey": "vidly_jwtPrivateKey",
-  "db": "integrated_db" 
+  "jwtPrivateKey": "E-shop-backend_jwtPrivateKey",
+  "db": "E-shop-backend_db" 
 }
+

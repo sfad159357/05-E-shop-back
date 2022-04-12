@@ -1,5 +1,5 @@
 {
-  "jwtPrivateKey": "E-shop-backend_jwtPrivateKey",
-  "db": "E-shop-backend_db" 
+  "jwtPrivateKey": "eshopb_jwtPrivateKey",
+  "db": "eshopb_db" 
 }
 

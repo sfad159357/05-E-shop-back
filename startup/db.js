@@ -14,5 +14,6 @@ module.exports = function () {
   // });
 
   const db = config.get("db");
-  mongoose.connect(db).then(() => winston.info(`Connected to ${db}...`));
+  mongoose.connect(db).then(() => winston.info(`Connected to ${db}...`),
+   { useNewUrlParser: true, useUnifiedTopology: true });
 };

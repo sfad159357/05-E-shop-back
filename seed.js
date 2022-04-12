@@ -41,7 +41,8 @@ const data = [
 ];
 
 async function seed() {
-  await mongoose.connect(config.get("db"), { useNewUrlParser: true, useUnifiedTopology: true });
+  await mongoose.connect('mongodb://sfad159357:753951sfad@cluster0-shard-00-00.rjrvl.gcp.mongodb.net:27017,cluster0-shard-00-01.rjrvl.gcp.mongodb.net:27017,cluster0-shard-00-02.rjrvl.gcp.mongodb.net:27017/eshop_db?ssl=true&replicaSet=atlas-brw5hw-shard-0&authSource=admin&retryWrites=true&w=majority'
+    , { useNewUrlParser: true, useUnifiedTopology: true });
 
   await Product.deleteMany({});
   await Category.deleteMany({});

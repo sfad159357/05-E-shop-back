@@ -22,8 +22,8 @@ router.post('/', async (req, res) => {
           quantity: item.quantity
         }
       }),
-      success_url:`${process.env.DEV_SERVER_URL}/success`,
-      cancel_url:`${process.env.DEV_SERVER_URL}/cancel`
+      success_url:`${process.env.PROD_SERVER_URL}/success`,
+      cancel_url:`${process.env.PROD_SERVER_URL}/cancel`
     })
     res.json({ url: session.url})
   } catch (e){

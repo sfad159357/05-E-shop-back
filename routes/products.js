@@ -39,7 +39,8 @@ router.post("/", [auth], async (req, res) => {
   res.send(product);
 });
 
-router.put("/:id", [auth], async (req, res) => {
+// 參2[auth] 先省略
+router.put("/:id", async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -71,8 +72,8 @@ router.put("/:id", [auth], async (req, res) => {
 });
 
 // 必須要同時具備auth和admin兩條件，才能夠被允許刪除
-// [auth, admin]代表auth,admin是middleware function
-router.delete("/:id", [auth], async (req, res) => {
+// 參2[auth, admin]代表auth,admin是middleware function
+router.delete("/:id",  async (req, res) => {
   const product = await Product.findByIdAndRemove(req.params.id);
 
   if (!product)
